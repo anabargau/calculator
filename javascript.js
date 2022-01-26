@@ -8,10 +8,11 @@ let equalBtn = document.getElementById("equal")
 let num1 = ""
 let num2 = ""
 let operator = ""
+let errorMessage = 0
 
 function getNumber(num){
-    if (display.textContent == "Hey! You can't do that!"){
-        display.textContent = ""
+    if (errorMessage){
+        clear ()
     }
     if((!operator) && (num1.length < 10)){
         num1 += num
@@ -24,10 +25,22 @@ function getNumber(num){
 }
 
 function getOperation (oper){
-    if(!operator){
-    operator = oper 
-    display.textContent += oper
-    disableOperation()
+    if (errorMessage){
+        clear ()
+    }
+    let string = num1 + operator + num2
+    if(string.charAt(string.length - 1) == operator){
+        display.textContent = "Hey! You can't do that!"
+        errorMessage = 1
+    }
+    else { 
+        if(num2){
+           calculate()
+        }
+        if(!errorMessage){
+            operator = oper 
+            display.textContent += oper
+        }
     }
 }
 
@@ -46,13 +59,17 @@ function calculate(){
         if(operator == "/"){
             if(num2 == 0){
                 display.textContent = "Hey! You can't do that!"
+                errorMessage = 1
             } else result = parseFloat(num1) / parseFloat(num2)
         }
         num1 = result
         num2 = ""
         operator = ""
-        enableOperation()
-    } else display.textContent = "Hey! You can't do that!"
+        
+    } else {
+        display.textContent = "Hey! You can't do that!"
+        errorMessage = 1
+    }
     if(result){
     display.textContent = Math.round(result * 1000) / 1000
     }
@@ -63,42 +80,35 @@ function clear(){
     num2 = ""
     operator = ""
     display.textContent = ""
-    enableOperation()
-}
-
-function enableOperation(){
-    operationBtn.forEach(button => button.disabled = false)
-}
-
-function disableOperation(){
-    operationBtn.forEach(button => button.disabled = true)
+    errorMessage = 0
 }
 
 function dlt(){
-    let string = num1 + operator + num2
-    if(string){
-        if(!num2){
-            enableOperation()
-        }
-        string = string.slice(0, string.length - 1)
-        if(string.includes(operator) == false){
-            operator = ""
-            enableOperation()
-        }
-        display.textContent = string
-        if(operator){
-            let numbers = string.split(operator)
-            num1 = numbers[0]
-            if(numbers[1]){
-                num2 = numbers[1]
+    if(errorMessage){
+        clear()
+    } else {
+        let string = num1 + operator + num2
+        if(string){
+            string = string.slice(0, string.length - 1)
+            if(string.includes(operator) == false){
+                operator = ""
+                
+            }
+            display.textContent = string
+            if(operator){
+                let numbers = string.split(operator)
+                num1 = numbers[0]
+                if(numbers[1]){
+                    num2 = numbers[1]
+                } else {
+                    num2 = ""
+                }    
             } else {
+                num1 = string
                 num2 = ""
-            }    
-        } else {
-            num1 = string
-            num2 = ""
+            }
         }
-    }
+    }    
 }
 
 function addDot(){

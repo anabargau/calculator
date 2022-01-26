@@ -14,7 +14,7 @@ html{
     margin-right: auto;
     margin-top: 100px;
     max-height: fit-content;
-    background-color: black;
+    background-color: rgb(0, 0, 0);
     border-radius: 25px;
     padding: 20px;
     font-family: 'Pacifico', cursive;
