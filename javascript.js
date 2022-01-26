@@ -30,17 +30,15 @@ function getOperation (oper){
     }
     let string = num1 + operator + num2
     if(string.charAt(string.length - 1) == operator){
-        display.textContent = "Hey! You can't do that!"
-        errorMessage = 1
+        string = string.slice(0, string.length - 1)
+        display.textContent = display.textContent.slice(0, display.textContent.length -1)
     }
-    else { 
-        if(num2){
-           calculate()
-        }
-        if(!errorMessage){
-            operator = oper 
-            display.textContent += oper
-        }
+    if(num2){
+       calculate()
+    }
+    if(!errorMessage){
+        operator = oper 
+        display.textContent += oper
     }
 }
 
@@ -81,6 +79,7 @@ function clear(){
     operator = ""
     display.textContent = ""
     errorMessage = 0
+    enableOperationButtons()
 }
 
 function dlt(){
@@ -92,7 +91,6 @@ function dlt(){
             string = string.slice(0, string.length - 1)
             if(string.includes(operator) == false){
                 operator = ""
-                
             }
             display.textContent = string
             if(operator){
@@ -109,6 +107,14 @@ function dlt(){
             }
         }
     }    
+}
+
+function disableOperationButtons() {
+    operationBtn.forEach(button => button.disabled == true)
+}
+
+function enableOperationButtons() {
+    operationBtn.forEach(button => button.disabled == false)
 }
 
 function addDot(){
