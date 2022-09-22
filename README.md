@@ -7,4 +7,4 @@ It is a calculator app that lets you do basic math operations like add, substrac
 * HTML
 
 ## How to view the site
-You can simply visit the [live page](https://anabargau.github.io/calculator/).
+You can simply visit the live page [here](https://anabargau.github.io/calculator/).
